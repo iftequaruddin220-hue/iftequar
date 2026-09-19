@@ -52,28 +52,9 @@ export default function Footer() {
             © {new Date().getFullYear()} {PERSONAL_INFO.name}. All rights reserved.
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            <a
-              href="/portfolio-website.zip"
-              download="portfolio-website.zip"
-              className="text-neutral-700 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white font-medium flex items-center gap-1.5 underline underline-offset-4 transition-colors"
-              title="Download full project source code (React, Vite, Tailwind)"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Download Project ZIP</span>
-            </a>
-            <span>·</span>
-            <a
-              href="/portfolio-dist.zip"
-              download="portfolio-dist.zip"
-              className="text-neutral-500 hover:text-neutral-950 dark:hover:text-white transition-colors"
-              title="Download compiled production build ready to host"
-            >
-              Production Build
-            </a>
-            <span>·</span>
-            <span>{PERSONAL_INFO.location}</span>
-          </div>
+<div className="flex items-center gap-4">
+  <span>{PERSONAL_INFO.location}</span>
+</div>
         </div>
 
       </div>
