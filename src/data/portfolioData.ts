@@ -62,7 +62,7 @@ export const PROJECTS: Project[] = [
     tags: ['Data Analytics', 'KPI Dashboard', 'React / TypeScript', 'UI/UX Design', 'Tailwind CSS'],
     description: 'A focused analytics experience built around performance metrics, real-time revenue trends, category breakdown donut charts, and automated order fulfillment tracking. Includes a synchronized mobile companion experience.',
     featured: true,
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80',
+    image: '/kpi-dashboard.png',
     metrics: [
       { label: 'Revenue Monitored', value: '₹8.42M+' },
       { label: 'Query Latency', value: '< 120ms' },

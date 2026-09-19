@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import { X, CheckCircle2, Layers, Calendar, User, Building, Upload } from 'lucide-react';
+import { useEffect } from 'react';
+import { X, CheckCircle2, Layers, Calendar, User, Building } from 'lucide-react';
 import { Project } from '../types';
 
 interface ProjectModalProps {
@@ -8,70 +8,6 @@ interface ProjectModalProps {
 }
 
 export default function ProjectModal({ project, onClose }: ProjectModalProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [modalImage, setModalImage] = useState<string>('');
-  const [isUploading, setIsUploading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (project) {
-      try {
-        const saved = localStorage.getItem(`project_image_${project.id}`);
-        setModalImage(saved || project.image);
-      } catch {
-        setModalImage(project.image);
-      }
-    }
-  }, [project]);
-
-  const handleFileUpload = (file: File) => {
-    if (!project || !file.type.startsWith('image/')) return;
-    setIsUploading(true);
-
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const dataUrl = e.target?.result as string;
-      if (dataUrl) {
-        setModalImage(dataUrl);
-
-        const filename = project.id === 'ecommerce' 
-          ? 'ecommerce.png' 
-          : project.id === 'fashion-app' 
-          ? 'fashion-app.png' 
-          : `${project.id}.png`;
-
-        try {
-          const resp = await fetch('/api/upload-photo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ dataUrl, filename }),
-          });
-          const result = await resp.json();
-          if (result.success && result.url) {
-            setModalImage(result.url);
-            try {
-              localStorage.setItem(`project_image_${project.id}`, result.url);
-            } catch {
-              // Ignore quota error
-            }
-          }
-        } catch (err) {
-          console.error('[Modal Upload] Error:', err);
-          try {
-            localStorage.setItem(`project_image_${project.id}`, dataUrl);
-          } catch {
-            // Ignore quota error
-          }
-        } finally {
-          setIsUploading(false);
-        }
-      } else {
-        setIsUploading(false);
-      }
-    };
-    reader.onerror = () => setIsUploading(false);
-    reader.readAsDataURL(file);
-  };
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -100,22 +36,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white dark:bg-[#0f0f12] border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl p-6 sm:p-10 text-neutral-900 dark:text-neutral-100"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Hidden File Input */}
-        <input
-          type="file"
-          ref={fileInputRef}
-          accept="image/*"
-          className="hidden"
-          onClick={(e) => {
-            (e.target as HTMLInputElement).value = '';
-          }}
-          onChange={(e) => {
-            const f = e.target.files?.[0];
-            if (f) handleFileUpload(f);
-            e.target.value = '';
-          }}
-        />
-
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -150,36 +70,11 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         {/* Project Image Banner */}
         <div className="group relative aspect-video rounded-xl overflow-hidden mb-8 border border-neutral-200 dark:border-neutral-800 bg-neutral-950">
           <img
-            key={modalImage || project.image}
-            src={modalImage || project.image}
+            src={project.image}
             alt={project.title}
             className="w-full h-full object-cover object-top"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              if (project.id === 'ecommerce') {
-                e.currentTarget.src = '/ecommerce.png';
-              } else if (project.id === 'fashion-app') {
-                e.currentTarget.src = '/fashion-app.png';
-              }
-            }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-
-          {/* Upload / Replace Image Button in Modal */}
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="absolute bottom-4 right-4 px-3.5 py-2 rounded-lg bg-black/80 hover:bg-black text-white text-xs font-mono font-medium border border-white/25 backdrop-blur-md transition-all flex items-center gap-2 shadow-lg cursor-pointer"
-          >
-            {isUploading ? (
-              <span className="animate-pulse text-amber-300">Uploading image...</span>
-            ) : (
-              <>
-                <Upload className="w-3.5 h-3.5" />
-                <span>Upload Image</span>
-              </>
-            )}
-          </button>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 pointer-events-none" />
         </div>
 
         {/* Metadata Grid */}

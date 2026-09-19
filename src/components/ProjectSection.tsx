@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { ArrowUpRight, Upload } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { Project } from '../types';
 import { PROJECTS } from '../data/portfolioData';
 
@@ -9,83 +9,6 @@ interface ProjectSectionProps {
 
 export default function ProjectSection({ onSelectProject }: ProjectSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const fileInputsRef = useRef<Record<string, HTMLInputElement | null>>({});
-
-  const [uploadingId, setUploadingId] = useState<string | null>(null);
-
-  const [customImages, setCustomImages] = useState<Record<string, string>>(() => {
-    if (typeof window === 'undefined') return {};
-    const res: Record<string, string> = {};
-    try {
-      const kpi = localStorage.getItem('project_image_kpi-dashboard');
-      if (kpi && kpi.trim().length > 0) res['kpi-dashboard'] = kpi;
-      const ecom = localStorage.getItem('project_image_ecommerce');
-      if (ecom && ecom.trim().length > 0) res['ecommerce'] = ecom;
-      const fash = localStorage.getItem('project_image_fashion-app');
-      if (fash && fash.trim().length > 0) res['fashion-app'] = fash;
-    } catch {
-      // Safe fallback
-    }
-    return res;
-  });
-
-  const handleProjectImageUpload = async (projectId: string, file: File, e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    if (!file || !file.type.startsWith('image/')) return;
-    setUploadingId(projectId);
-
-    const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const dataUrl = ev.target?.result as string;
-      if (!dataUrl) {
-        setUploadingId(null);
-        return;
-      }
-
-      // Optimistic preview in React state
-      setCustomImages((prev) => ({ ...prev, [projectId]: dataUrl }));
-
-      const filename = projectId === 'ecommerce' 
-        ? 'ecommerce.png' 
-        : projectId === 'fashion-app' 
-        ? 'fashion-app.png' 
-        : `${projectId}.png`;
-
-      try {
-        const resp = await fetch('/api/upload-photo', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ dataUrl, filename }),
-        });
-        const result = await resp.json();
-        if (result.success && result.url) {
-          setCustomImages((prev) => ({ ...prev, [projectId]: result.url }));
-          try {
-            // Save short URL to avoid localStorage quota limits
-            localStorage.setItem(`project_image_${projectId}`, result.url);
-          } catch {
-            // Ignore quota errors
-          }
-        }
-      } catch (err) {
-        console.error('Failed to sync uploaded project image:', err);
-        try {
-          localStorage.setItem(`project_image_${projectId}`, dataUrl);
-        } catch {
-          // Ignore quota errors
-        }
-      } finally {
-        setUploadingId(null);
-      }
-    };
-    reader.onerror = () => {
-      setUploadingId(null);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const categories = ['All', 'Web App & SaaS', 'E-Commerce', 'Mobile UI/UX', 'AI & Automation'];
 
@@ -134,82 +57,28 @@ export default function ProjectSection({ onSelectProject }: ProjectSectionProps)
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredProjects.map((project) => {
-              const currentImg = customImages[project.id] || project.image;
               return (
                 <article
                   key={project.id}
                   onClick={() => onSelectProject(project)}
-                  onDragOver={(e) => e.preventDefault()}
-                  onDrop={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const file = e.dataTransfer.files?.[0];
-                    if (file) handleProjectImageUpload(project.id, file);
-                  }}
                   className="group cursor-pointer rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0c0c0f] hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 flex flex-col justify-between shadow-md hover:shadow-xl hover:-translate-y-1"
                 >
-                  {/* Hidden File Input */}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    ref={(el) => {
-                      fileInputsRef.current[project.id] = el;
-                    }}
-                    onClick={(e) => {
-                      (e.target as HTMLInputElement).value = '';
-                    }}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) handleProjectImageUpload(project.id, file);
-                      e.target.value = '';
-                    }}
-                  />
-
                   {/* Visual Header */}
                   <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">
                     <img
-                      key={currentImg}
-                      src={currentImg}
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        if (project.id === 'ecommerce') {
-                          e.currentTarget.src = '/ecommerce.png';
-                        } else if (project.id === 'fashion-app') {
-                          e.currentTarget.src = '/fashion-app.png';
-                        }
-                      }}
+                      loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent opacity-80 pointer-events-none" />
                     
                     {/* Category Pill Over Image */}
-                    <div className="absolute top-4 left-4">
+                    <div className="absolute top-4 left-4 pointer-events-none">
                       <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-black/60 text-white backdrop-blur-md border border-white/10">
                         {project.category}
                       </span>
                     </div>
-
-                    {/* Upload button on card */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        fileInputsRef.current[project.id]?.click();
-                      }}
-                      title="Upload or replace image"
-                      className="absolute top-4 right-4 px-2.5 py-1.5 rounded-lg text-xs font-mono bg-black/80 hover:bg-black text-white border border-white/25 backdrop-blur-md shadow-md opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 z-20 cursor-pointer"
-                    >
-                      {uploadingId === project.id ? (
-                        <span className="animate-pulse text-amber-300">Uploading...</span>
-                      ) : (
-                        <>
-                          <Upload className="w-3 h-3" />
-                          <span>Upload Image</span>
-                        </>
-                      )}
-                    </button>
 
                     {/* Arrow Indicator */}
                     <div className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white text-neutral-950 flex items-center justify-center transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-lg pointer-events-none">
