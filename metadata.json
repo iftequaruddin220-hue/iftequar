@@ -1,0 +1,6 @@
+{
+  "name": "Iftequaruddin Portfolio",
+  "description": "Personal portfolio website of Iftequaruddin showcasing digital products, software engineering, UI/UX architecture, technical insights, and contact.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
