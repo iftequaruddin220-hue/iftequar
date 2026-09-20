@@ -6,13 +6,13 @@ export const PERSONAL_INFO = {
   tagline: 'I turn ideas into digital products.',
   bio: 'I design and build websites, software, and intelligent digital systems that help businesses move from an idea to something real. Based in India, working with ambitious clients globally.',
   email: 'iftequaruddin220@gmail.com',
+  secondaryEmail: 'iftequaruddin220@gmail.com',
   location: 'India · Working Globally (Remote)',
   availability: 'Available for Q3/Q4 Projects',
   status: 'Accepting select freelance & full-stack contract work',
   socials: {
-    
-    linkedin: 'www.linkedin.com/in/iftequar-uddin-316b2a376',
-
+    github: 'https://github.com/iftequaruddin220-hue',
+    linkedin: 'https://www.linkedin.com/in/iftequar-uddin-316b2a376',
   },
 };
 

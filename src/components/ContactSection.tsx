@@ -70,7 +70,7 @@ export default function ContactSection() {
     } catch (err: any) {
       console.error('EmailJS submission error:', err);
       setStatus('error');
-      setErrorMessage(err?.text || 'Failed to dispatch email. Please reach out directly to contact.iftequar@gmail.com.');
+      setErrorMessage(err?.text || `Failed to dispatch email. Please reach out directly to ${PERSONAL_INFO.email}.`);
     }
   };
 
