@@ -59,6 +59,11 @@ export interface ServiceItem {
   title: string;
   description: string;
   deliverables: string[];
+  category?: string;
+  timeline?: string;
+  technologies?: string[];
+  impactMetric?: { label: string; value: string };
+  relatedProjectId?: string;
 }
 
 export interface ContactFormData {
