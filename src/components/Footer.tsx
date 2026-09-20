@@ -1,5 +1,7 @@
 import { ArrowUp } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { sectionFadeIn } from '../lib/animations';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -7,7 +9,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-100/50 dark:bg-[#08080a] py-14 transition-colors">
+    <motion.footer
+      {...sectionFadeIn}
+      className="border-t border-neutral-200 dark:border-neutral-800 bg-neutral-100/50 dark:bg-[#08080a] py-14 transition-colors"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 space-y-10">
         
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
@@ -58,6 +63,6 @@ export default function Footer() {
         </div>
 
       </div>
-    </footer>
+    </motion.footer>
   );
 }

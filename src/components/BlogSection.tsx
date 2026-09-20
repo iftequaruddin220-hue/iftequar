@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { BookOpen, Clock, Calendar, ArrowUpRight, X, Share2, Check } from 'lucide-react';
+import { motion } from 'motion/react';
 import { BlogPost } from '../types';
 import { BLOG_POSTS } from '../data/portfolioData';
+import { sectionFadeIn, cardFadeIn } from '../lib/animations';
 
 export default function BlogSection() {
   const [activeArticle, setActiveArticle] = useState<BlogPost | null>(null);
@@ -16,7 +18,11 @@ export default function BlogSection() {
   };
 
   return (
-    <section id="blog" className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80">
+    <motion.section
+      id="blog"
+      {...sectionFadeIn}
+      className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Section Header */}
@@ -41,9 +47,10 @@ export default function BlogSection() {
 
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {BLOG_POSTS.map((post) => (
-            <article
+          {BLOG_POSTS.map((post, index) => (
+            <motion.article
               key={post.id}
+              {...cardFadeIn(index)}
               onClick={() => setActiveArticle(post)}
               className="group cursor-pointer rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0c0c0f] p-8 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1"
             >
@@ -83,7 +90,7 @@ export default function BlogSection() {
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
 
@@ -176,6 +183,6 @@ export default function BlogSection() {
         )}
 
       </div>
-    </section>
+    </motion.section>
   );
 }

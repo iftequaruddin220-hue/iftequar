@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArrowDown, ArrowUpRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { heroFadeIn } from '../lib/animations';
 
 const DYNAMIC_PHRASES = [
   'digital products.',
@@ -21,8 +22,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section
+    <motion.section
       id="top"
+      {...heroFadeIn}
       className="relative min-h-[92vh] flex items-center pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden"
     >
       {/* Subtle background ambient blur */}
@@ -152,6 +154,6 @@ export default function Hero() {
 
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

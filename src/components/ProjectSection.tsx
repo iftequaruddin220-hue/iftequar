@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Project } from '../types';
 import { PROJECTS } from '../data/portfolioData';
+import { sectionFadeIn, cardFadeIn } from '../lib/animations';
 
 interface ProjectSectionProps {
   onSelectProject: (project: Project) => void;
@@ -17,7 +19,11 @@ export default function ProjectSection({ onSelectProject }: ProjectSectionProps)
     : PROJECTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="work" className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80">
+    <motion.section
+      id="work"
+      {...sectionFadeIn}
+      className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Section Header */}
@@ -56,10 +62,11 @@ export default function ProjectSection({ onSelectProject }: ProjectSectionProps)
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredProjects.map((project) => {
+          {filteredProjects.map((project, index) => {
               return (
-                <article
+                <motion.article
                   key={project.id}
+                  {...cardFadeIn(index)}
                   onClick={() => onSelectProject(project)}
                   className="group cursor-pointer rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0c0c0f] hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 flex flex-col justify-between shadow-md hover:shadow-xl hover:-translate-y-1"
                 >
@@ -122,12 +129,12 @@ export default function ProjectSection({ onSelectProject }: ProjectSectionProps)
                     </span>
                   </div>
                 </div>
-              </article>
+              </motion.article>
             );
           })}
         </div>
 
       </div>
-    </section>
+    </motion.section>
   );
 }

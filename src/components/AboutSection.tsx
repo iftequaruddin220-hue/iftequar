@@ -1,5 +1,7 @@
 import { ArrowUpRight, Code, Palette, Cpu, Globe, Terminal, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { sectionFadeIn } from '../lib/animations';
 
 export default function AboutSection() {
   const stack = [
@@ -10,7 +12,11 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80">
+    <motion.section
+      id="about"
+      {...sectionFadeIn}
+      className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
@@ -105,6 +111,6 @@ export default function AboutSection() {
 
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

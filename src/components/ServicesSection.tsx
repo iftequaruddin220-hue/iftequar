@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { motion } from 'motion/react';
 import { SERVICES } from '../data/portfolioData';
+import { sectionFadeIn } from '../lib/animations';
 
 export default function ServicesSection() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -10,7 +12,11 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="services" className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80">
+    <motion.section
+      id="services"
+      {...sectionFadeIn}
+      className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Section Header */}
@@ -103,6 +109,6 @@ export default function ServicesSection() {
         </div>
 
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -1,8 +1,10 @@
 import { useState, FormEvent } from 'react';
 import { Send, Check, Copy, ArrowUpRight, Mail, MapPin, Clock, AlertCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { motion } from 'motion/react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { ContactFormData } from '../types';
+import { sectionFadeIn } from '../lib/animations';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -75,7 +77,11 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80">
+    <motion.section
+      id="contact"
+      {...sectionFadeIn}
+      className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           
@@ -309,6 +315,6 @@ export default function ContactSection() {
 
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

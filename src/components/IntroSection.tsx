@@ -1,6 +1,12 @@
+import { motion } from 'motion/react';
+import { sectionFadeIn } from '../lib/animations';
+
 export default function IntroSection() {
   return (
-    <section className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80">
+    <motion.section
+      {...sectionFadeIn}
+      className="py-24 sm:py-32 border-t border-neutral-200 dark:border-neutral-800/80"
+    >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           
@@ -37,6 +43,6 @@ export default function IntroSection() {
 
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
