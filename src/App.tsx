@@ -87,7 +87,7 @@ export default function App() {
         <ProjectSection onSelectProject={(project) => setSelectedProject(project)} />
         <InteractiveLabSection />
         <BlogSection />
-        <ServicesSection onSelectProject={(project) => setSelectedProject(project)} />
+        <ServicesSection />
         <AboutSection />
         <ContactSection />
       </main>
