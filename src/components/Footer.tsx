@@ -32,10 +32,11 @@ export default function Footer() {
 
           {/* Quick Nav Anchor Links */}
           <div className="flex flex-wrap gap-6 text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
-            <a href="#about" className="hover:text-neutral-950 dark:hover:text-white transition-colors">About</a>
-            <a href="#services" className="hover:text-neutral-950 dark:hover:text-white transition-colors">Services</a>
             <a href="#work" className="hover:text-neutral-950 dark:hover:text-white transition-colors">Work</a>
+            <a href="#lab" className="hover:text-neutral-950 dark:hover:text-white transition-colors">Lab</a>
             <a href="#blog" className="hover:text-neutral-950 dark:hover:text-white transition-colors">Insights</a>
+            <a href="#services" className="hover:text-neutral-950 dark:hover:text-white transition-colors">Services</a>
+            <a href="#about" className="hover:text-neutral-950 dark:hover:text-white transition-colors">About</a>
             <a href="#contact" className="hover:text-neutral-950 dark:hover:text-white transition-colors">Contact</a>
           </div>
 

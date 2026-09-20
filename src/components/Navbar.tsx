@@ -22,10 +22,11 @@ export default function Navbar({ activeSection }: NavbarProps) {
   }, []);
 
   const navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Services', href: '#services' },
     { label: 'Work', href: '#work' },
+    { label: 'Lab', href: '#lab' },
     { label: 'Insights', href: '#blog' },
+    { label: 'Services', href: '#services' },
+    { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ];
 

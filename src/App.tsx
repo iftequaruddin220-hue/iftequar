@@ -4,6 +4,7 @@ import ScrollProgress from './components/ScrollProgress';
 import Hero from './components/Hero';
 import IntroSection from './components/IntroSection';
 import ProjectSection from './components/ProjectSection';
+import InteractiveLabSection from './components/InteractiveLabSection';
 import BlogSection from './components/BlogSection';
 import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
@@ -42,7 +43,7 @@ export default function App() {
 
   // Track active section on scroll
   useEffect(() => {
-    const sectionIds = ['top', 'about', 'services', 'work', 'blog', 'contact'];
+    const sectionIds = ['top', 'work', 'lab', 'blog', 'services', 'about', 'contact'];
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200;
       for (let i = sectionIds.length - 1; i >= 0; i--) {
@@ -84,6 +85,7 @@ export default function App() {
         <Hero />
         <IntroSection />
         <ProjectSection onSelectProject={(project) => setSelectedProject(project)} />
+        <InteractiveLabSection />
         <BlogSection />
         <ServicesSection />
         <AboutSection />
