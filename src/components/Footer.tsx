@@ -1,4 +1,4 @@
-import { ArrowUp, Download } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export default function Footer() {

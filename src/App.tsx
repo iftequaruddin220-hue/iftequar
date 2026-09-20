@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
+import ScrollProgress from './components/ScrollProgress';
 import Hero from './components/Hero';
 import IntroSection from './components/IntroSection';
 import ProjectSection from './components/ProjectSection';
@@ -60,6 +61,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#fcfcfc] dark:bg-[#060607] text-[#0a0a0c] dark:text-[#f4f4f5] transition-colors duration-300">
+      {/* Viewport Scroll Depth Progress Bar */}
+      <ScrollProgress />
+
       {/* Accessible skip link */}
       <a
         href="#main-content"

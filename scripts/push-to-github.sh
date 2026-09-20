@@ -11,6 +11,11 @@ fi
 
 REPO_URL="https://x-access-token:${TOKEN}@github.com/iftequaruddin220-hue/iftequar.git"
 
+if [ ! -d ".git" ]; then
+  git init
+  git branch -M main
+fi
+
 git config user.name "iftequaruddin220-hue"
 git config user.email "iftequaruddin220@gmail.com"
 
