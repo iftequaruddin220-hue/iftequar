@@ -38,12 +38,17 @@ export default function Hero() {
           
           {/* Left Column: Typography & Intent */}
           <div className="lg:col-span-7 space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-100/70 dark:bg-neutral-900/60 backdrop-blur-sm">
+            <motion.div
+              id="hero-role-badge"
+              whileHover={{ y: -3, scale: 1.025 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neutral-200 dark:border-neutral-800 bg-neutral-100/70 dark:bg-neutral-900/60 backdrop-blur-sm cursor-default hover:border-neutral-300 dark:hover:border-neutral-700 shadow-sm hover:shadow-md transition-colors"
+            >
               <Sparkles className="w-3.5 h-3.5 text-neutral-600 dark:text-neutral-400" />
               <p className="font-mono text-[11px] font-medium tracking-widest text-neutral-600 dark:text-neutral-400 uppercase">
                 {PERSONAL_INFO.role}
               </p>
-            </div>
+            </motion.div>
 
             <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.14] sm:leading-[1.08]">
               I turn ideas into{' '}
@@ -101,10 +106,6 @@ export default function Hero() {
               <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600" />
                 <span>Remote · Worldwide</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600" />
-                <span>React 19 & Tailwind</span>
               </div>
             </div>
           </div>
