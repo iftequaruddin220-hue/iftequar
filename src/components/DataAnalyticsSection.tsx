@@ -17,11 +17,19 @@ import {
   Activity, 
   CheckCircle2, 
   X,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Car
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Project } from '../types';
-import { INSIGHTPULSE_PROJECT, STARBUCKS_GALLERY, STARBUCKS_INSIGHTS } from '../data/portfolioData';
+import { 
+  INSIGHTPULSE_PROJECT, 
+  STARBUCKS_GALLERY, 
+  STARBUCKS_INSIGHTS,
+  UBER_PROJECT,
+  UBER_GALLERY,
+  UBER_INSIGHTS
+} from '../data/portfolioData';
 import { sectionFadeIn, cardFadeIn } from '../lib/animations';
 
 interface DataAnalyticsSectionProps {
@@ -40,17 +48,93 @@ const TECH_BADGES = [
 ];
 
 export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsSectionProps) {
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  // Starbucks Gallery State
+  const [starbucksImageIndex, setStarbucksImageIndex] = useState(0);
 
-  const activeImage = STARBUCKS_GALLERY[activeImageIndex] || STARBUCKS_GALLERY[0];
+  // Uber Gallery State
+  const [uberImageIndex, setUberImageIndex] = useState(0);
 
-  const handleNext = () => {
-    setActiveImageIndex((prev) => (prev + 1) % STARBUCKS_GALLERY.length);
+  // Universal Lightbox Modal State
+  const [lightboxData, setLightboxData] = useState<{
+    url: string;
+    title: string;
+    subtitle: string;
+    alt: string;
+    items: Array<{ id: string; title: string; subtitle: string; url: string; alt: string }>;
+    currentIndex: number;
+    accentColor: string;
+    onSelectIndex: (idx: number) => void;
+  } | null>(null);
+
+  const activeStarbucksImage = STARBUCKS_GALLERY[starbucksImageIndex] || STARBUCKS_GALLERY[0];
+  const activeUberImage = UBER_GALLERY[uberImageIndex] || UBER_GALLERY[0];
+
+  const handleStarbucksNext = () => {
+    setStarbucksImageIndex((prev) => (prev + 1) % STARBUCKS_GALLERY.length);
   };
 
-  const handlePrev = () => {
-    setActiveImageIndex((prev) => (prev - 1 + STARBUCKS_GALLERY.length) % STARBUCKS_GALLERY.length);
+  const handleStarbucksPrev = () => {
+    setStarbucksImageIndex((prev) => (prev - 1 + STARBUCKS_GALLERY.length) % STARBUCKS_GALLERY.length);
+  };
+
+  const handleUberNext = () => {
+    setUberImageIndex((prev) => (prev + 1) % UBER_GALLERY.length);
+  };
+
+  const handleUberPrev = () => {
+    setUberImageIndex((prev) => (prev - 1 + UBER_GALLERY.length) % UBER_GALLERY.length);
+  };
+
+  const openStarbucksLightbox = () => {
+    setLightboxData({
+      url: activeStarbucksImage.url,
+      title: activeStarbucksImage.title,
+      subtitle: activeStarbucksImage.subtitle,
+      alt: activeStarbucksImage.alt,
+      items: STARBUCKS_GALLERY,
+      currentIndex: starbucksImageIndex,
+      accentColor: 'bg-emerald-500',
+      onSelectIndex: (idx) => {
+        setStarbucksImageIndex(idx);
+        const item = STARBUCKS_GALLERY[idx];
+        if (item) {
+          setLightboxData((prev) => prev ? {
+            ...prev,
+            url: item.url,
+            title: item.title,
+            subtitle: item.subtitle,
+            alt: item.alt,
+            currentIndex: idx,
+          } : null);
+        }
+      },
+    });
+  };
+
+  const openUberLightbox = () => {
+    setLightboxData({
+      url: activeUberImage.url,
+      title: `${activeUberImage.title} Category`,
+      subtitle: activeUberImage.subtitle,
+      alt: activeUberImage.alt,
+      items: UBER_GALLERY,
+      currentIndex: uberImageIndex,
+      accentColor: 'bg-blue-500',
+      onSelectIndex: (idx) => {
+        setUberImageIndex(idx);
+        const item = UBER_GALLERY[idx];
+        if (item) {
+          setLightboxData((prev) => prev ? {
+            ...prev,
+            url: item.url,
+            title: `${item.title} Category`,
+            subtitle: item.subtitle,
+            alt: item.alt,
+            currentIndex: idx,
+          } : null);
+        }
+      },
+    });
   };
 
   return (
@@ -102,7 +186,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
                   key={tech.name}
                   className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0e0e12] text-neutral-700 dark:text-neutral-300 text-xs font-medium tracking-wide shadow-2xs hover:border-emerald-500/50 dark:hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all duration-200"
                 >
-                  <Icon className="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-500 group-hover:text-emerald-500" />
+                  <Icon className="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-500" />
                   <span>{tech.name}</span>
                 </div>
               );
@@ -110,8 +194,10 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
           </div>
         </div>
 
-        {/* Featured Project Showcase Container */}
-        <div className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0c0c0f] shadow-xl overflow-hidden transition-all duration-300">
+        {/* ============================================================== */}
+        {/* PROJECT 1 (Featured): InsightPulse BI — Starbucks Analytics     */}
+        {/* ============================================================== */}
+        <div className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0c0c0f] shadow-xl overflow-hidden transition-all duration-300 mb-16">
           
           {/* Project Header Bar */}
           <div className="p-6 sm:p-8 lg:p-10 border-b border-neutral-200 dark:border-neutral-800/80 bg-neutral-100/40 dark:bg-white/[0.01]">
@@ -119,11 +205,11 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
               
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300/40 dark:border-emerald-700/40">
-                    Featured BI Dashboard
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300/40 dark:border-emerald-700/40 font-semibold">
+                    Featured Project · 01
                   </span>
                   <span className="font-mono text-xs text-neutral-400 dark:text-neutral-500">
-                    Microsoft Power BI · DAX · Power Query
+                    Microsoft Power BI · DAX · Power Query · Excel
                   </span>
                 </div>
 
@@ -146,7 +232,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
                   href="https://github.com/iftequaruddin220-hue/InsightPulse-BI"
                   target="_blank"
                   rel="noopener noreferrer"
-                  id="insightpulse-github-btn"
+                  id="starbucks-github-btn"
                   className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200 transition-all duration-300 shadow-sm hover:shadow hover:-translate-y-0.5"
                   aria-label="View InsightPulse BI repository on GitHub (opens in new tab)"
                 >
@@ -159,7 +245,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
                   <button
                     type="button"
                     onClick={() => onSelectProject(INSIGHTPULSE_PROJECT)}
-                    id="insightpulse-casestudy-btn"
+                    id="starbucks-casestudy-btn"
                     className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white border border-neutral-300 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white transition-all bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-900"
                   >
                     <span>Case Study</span>
@@ -245,7 +331,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <h4 className="font-display text-lg sm:text-xl font-bold text-neutral-950 dark:text-white">
-                  Dashboard & Analytics Gallery
+                  Dashboard &amp; Analytics Gallery
                 </h4>
                 <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
                   Inspect the interactive Power BI report views, statistical distribution charts, and analytical pipeline.
@@ -256,20 +342,20 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={handlePrev}
+                  onClick={handleStarbucksPrev}
                   className="w-9 h-9 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-                  aria-label="Previous gallery image"
+                  aria-label="Previous Starbucks gallery image"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400 px-1">
-                  {activeImageIndex + 1} / {STARBUCKS_GALLERY.length}
+                  {starbucksImageIndex + 1} / {STARBUCKS_GALLERY.length}
                 </span>
                 <button
                   type="button"
-                  onClick={handleNext}
+                  onClick={handleStarbucksNext}
                   className="w-9 h-9 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-                  aria-label="Next gallery image"
+                  aria-label="Next Starbucks gallery image"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -279,17 +365,17 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
             {/* Main Interactive Preview Container */}
             <div 
               className="relative aspect-video sm:aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-200 dark:border-neutral-800 group shadow-lg cursor-pointer"
-              onClick={() => setLightboxOpen(true)}
+              onClick={openStarbucksLightbox}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setLightboxOpen(true); }}
-              aria-label="Click to enlarge image in fullscreen lightbox"
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openStarbucksLightbox(); }}
+              aria-label="Click to enlarge Starbucks dashboard image in fullscreen lightbox"
             >
               <AnimatePresence mode="wait">
                 <motion.img
-                  key={activeImage.id}
-                  src={activeImage.url}
-                  alt={activeImage.alt}
+                  key={activeStarbucksImage.id}
+                  src={activeStarbucksImage.url}
+                  alt={activeStarbucksImage.alt}
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0 }}
@@ -304,9 +390,9 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
               <div className="absolute top-4 left-4 z-10">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-black/75 backdrop-blur-md border border-white/10 text-white font-mono text-xs">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>{activeImage.title}</span>
+                  <span>{activeStarbucksImage.title}</span>
                   <span className="text-neutral-400">·</span>
-                  <span className="text-neutral-300 hidden sm:inline">{activeImage.subtitle}</span>
+                  <span className="text-neutral-300 hidden sm:inline">{activeStarbucksImage.subtitle}</span>
                 </div>
               </div>
 
@@ -320,7 +406,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
               {/* Verified repository note watermark */}
               <div className="absolute bottom-4 right-4 z-10 pointer-events-none">
                 <span className="text-[10px] font-mono text-neutral-400 bg-black/70 backdrop-blur-xs px-2.5 py-1 rounded border border-white/5">
-                  .PBIX & Data in GitHub Repo
+                  .PBIX &amp; Data in GitHub Repo
                 </span>
               </div>
             </div>
@@ -328,12 +414,12 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
             {/* Thumbnail Selector Strip */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {STARBUCKS_GALLERY.map((img, idx) => {
-                const isSelected = activeImageIndex === idx;
+                const isSelected = starbucksImageIndex === idx;
                 return (
                   <button
                     key={img.id}
                     type="button"
-                    onClick={() => setActiveImageIndex(idx)}
+                    onClick={() => setStarbucksImageIndex(idx)}
                     className={`relative p-2 rounded-xl text-left border transition-all duration-200 flex flex-col gap-2 ${
                       isSelected
                         ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/20 shadow-md ring-1 ring-emerald-500/50'
@@ -369,7 +455,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
           {/* Project Capabilities & Architecture Breakdown */}
           <div className="p-6 sm:p-8 lg:p-10 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-100/30 dark:bg-white/[0.01]">
             <h4 className="font-display text-lg sm:text-xl font-bold text-neutral-950 dark:text-white mb-6">
-              Core Capabilities & BI Architecture
+              Core Capabilities &amp; BI Architecture
             </h4>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
@@ -384,7 +470,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
                 { title: 'Data Transformation with Power Query', desc: 'M-code data ingestion, typecasting, normalization, and null sanitation' },
                 { title: 'Analytical Calculations using DAX', desc: 'Custom measures for category means, standard deviation, and dynamic ranks' },
                 { title: 'Data Modeling & BI Visualization', desc: 'Star-schema dimensional modeling connecting facts with dimension tables' },
-              ].map((item, i) => (
+              ].map((item) => (
                 <div
                   key={item.title}
                   className="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800/80 bg-white dark:bg-[#0e0e12] flex items-start gap-3 shadow-2xs hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors"
@@ -415,7 +501,7 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
                 Insights at a Glance
               </h4>
               <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-                Key patterns and operational observations surfaced from the Starbuck beverage dataset:
+                Key patterns and operational observations surfaced from the Starbucks beverage dataset:
               </p>
             </div>
 
@@ -447,16 +533,15 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
             </div>
           </div>
 
-          {/* Bottom Section CTA Bar */}
+          {/* Starbucks Bottom CTA Strip */}
           <div className="p-6 sm:p-8 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-100/60 dark:bg-white/[0.02]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-              
               <div className="space-y-1">
                 <p className="font-display text-base font-bold text-neutral-900 dark:text-white">
-                  Explore the full project
+                  Explore Starbucks Analytics Repository
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Download the complete <code className="font-mono text-emerald-600 dark:text-emerald-400">.pbix</code> Power BI model, dataset files, and documentation on GitHub.
+                  Download the complete <code className="font-mono text-emerald-600 dark:text-emerald-400">Starbucks-Beverage-Analysis.pbix</code> Power BI model and datasets on GitHub.
                 </p>
               </div>
 
@@ -465,36 +550,419 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
                   href="https://github.com/iftequaruddin220-hue/InsightPulse-BI"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200 transition-all shadow-sm"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200 transition-all shadow-sm"
                 >
                   <span>View on GitHub →</span>
                   <Github className="w-3.5 h-3.5" />
                 </a>
-
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-semibold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white transition-colors"
-                >
-                  <span>Need data-driven solutions?</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
               </div>
-
             </div>
           </div>
 
         </div>
 
+        {/* ============================================================== */}
+        {/* PROJECT 2: Uber Analytics Dashboard                           */}
+        {/* Styled identically to InsightPulse BI — Starbucks Analytics   */}
+        {/* ============================================================== */}
+        <div 
+          id="uber-analytics-card"
+          className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0c0c0f] shadow-xl overflow-hidden transition-all duration-300 mb-16"
+        >
+          {/* Project Header Bar */}
+          <div className="p-6 sm:p-8 lg:p-10 border-b border-neutral-200 dark:border-neutral-800/80 bg-neutral-100/40 dark:bg-white/[0.01]">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-widest bg-blue-100 text-blue-800 dark:bg-blue-950/80 dark:text-blue-300 border border-blue-300/40 dark:border-blue-700/40 font-semibold">
+                    Analytics Project · 02
+                  </span>
+                  <span className="font-mono text-xs text-neutral-400 dark:text-neutral-500">
+                    Microsoft Power BI · DAX · Power Query · Excel
+                  </span>
+                </div>
+
+                <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-neutral-950 dark:text-white">
+                  Uber Analytics Dashboard
+                </h3>
+
+                <p className="text-base text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
+                  An interactive Uber analytics dashboard built to transform ride and vehicle data into clear business intelligence insights through data visualization and dashboard-driven analysis.
+                </p>
+
+                <p className="text-xs sm:text-sm font-mono text-neutral-500 dark:text-neutral-400">
+                  Focus dimensions: vehicle categories · ride telemetry · fleet volume · transit efficiency · route parameters · dispatch tiers
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 shrink-0">
+                <a
+                  href="https://github.com/iftequaruddin220-hue/Uber-Dashboard"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="uber-github-btn"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200 transition-all duration-300 shadow-sm hover:shadow hover:-translate-y-0.5"
+                  aria-label="View Uber Analytics Dashboard repository on GitHub (opens in new tab)"
+                >
+                  <Github className="w-4 h-4" />
+                  <span>View on GitHub</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+
+                {onSelectProject && (
+                  <button
+                    type="button"
+                    onClick={() => onSelectProject(UBER_PROJECT)}
+                    id="uber-casestudy-btn"
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white border border-neutral-300 dark:border-neutral-700 hover:border-neutral-900 dark:hover:border-white transition-all bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                  >
+                    <span>Case Study</span>
+                  </button>
+                )}
+              </div>
+
+            </div>
+          </div>
+
+          {/* Verified Project KPIs Strip */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-neutral-200 dark:divide-neutral-800 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-[#0e0e13]/60">
+            
+            {/* KPI 1 */}
+            <div className="p-5 sm:p-6 lg:p-7 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-neutral-400 dark:text-neutral-500 mb-2">
+                <span className="text-[11px] font-mono uppercase tracking-wider">Fleet Scope</span>
+                <Car className="w-4 h-4 text-blue-500" />
+              </div>
+              <div>
+                <div className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950 dark:text-white">
+                  5
+                </div>
+                <div className="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-1">
+                  Vehicle Categories
+                </div>
+              </div>
+            </div>
+
+            {/* KPI 2 */}
+            <div className="p-5 sm:p-6 lg:p-7 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-neutral-400 dark:text-neutral-500 mb-2">
+                <span className="text-[11px] font-mono uppercase tracking-wider">Data Modeling</span>
+                <Activity className="w-4 h-4 text-amber-500" />
+              </div>
+              <div>
+                <div className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950 dark:text-white">
+                  DAX <span className="text-xl sm:text-2xl font-semibold text-neutral-400 dark:text-neutral-500">Logic</span>
+                </div>
+                <div className="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-1">
+                  Custom Measures
+                </div>
+              </div>
+            </div>
+
+            {/* KPI 3 */}
+            <div className="p-5 sm:p-6 lg:p-7 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-neutral-400 dark:text-neutral-500 mb-2">
+                <span className="text-[11px] font-mono uppercase tracking-wider">ETL Pipeline</span>
+                <Filter className="w-4 h-4 text-emerald-500" />
+              </div>
+              <div>
+                <div className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950 dark:text-white">
+                  Power Query
+                </div>
+                <div className="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-1">
+                  M-Code Transformation
+                </div>
+              </div>
+            </div>
+
+            {/* KPI 4 */}
+            <div className="p-5 sm:p-6 lg:p-7 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-neutral-400 dark:text-neutral-500 mb-2">
+                <span className="text-[11px] font-mono uppercase tracking-wider">Deliverable</span>
+                <Zap className="w-4 h-4 text-purple-500" />
+              </div>
+              <div>
+                <div className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-neutral-950 dark:text-white">
+                  .PBIX
+                </div>
+                <div className="text-xs sm:text-sm font-medium text-neutral-600 dark:text-neutral-400 mt-1">
+                  Native Dashboard Model
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Interactive Project Showcase Gallery */}
+          <div className="p-6 sm:p-8 lg:p-10 space-y-6">
+            
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h4 className="font-display text-lg sm:text-xl font-bold text-neutral-950 dark:text-white">
+                  Dashboard &amp; Vehicle Fleet Gallery
+                </h4>
+                <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400">
+                  Inspect multi-modal vehicle tier visualizations, telemetry parameters, and data modeling from the Uber dashboard repository.
+                </p>
+              </div>
+
+              {/* Prev / Next controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleUberPrev}
+                  className="w-9 h-9 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                  aria-label="Previous Uber vehicle category"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <span className="text-xs font-mono text-neutral-500 dark:text-neutral-400 px-1">
+                  {uberImageIndex + 1} / {UBER_GALLERY.length}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleUberNext}
+                  className="w-9 h-9 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                  aria-label="Next Uber vehicle category"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Main Interactive Preview Container */}
+            <div 
+              className="relative aspect-video sm:aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-950 border border-neutral-200 dark:border-neutral-800 group shadow-lg cursor-pointer flex items-center justify-center p-4 sm:p-8"
+              onClick={openUberLightbox}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') openUberLightbox(); }}
+              aria-label="Click to enlarge Uber vehicle visualization in fullscreen lightbox"
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={activeUberImage.id}
+                  src={activeUberImage.url}
+                  alt={activeUberImage.alt}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  className="w-full h-full object-contain object-center drop-shadow-2xl"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </AnimatePresence>
+
+              {/* View Overlay Tag & Enlarge Button */}
+              <div className="absolute top-4 left-4 z-10">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-black/75 backdrop-blur-md border border-white/10 text-white font-mono text-xs">
+                  <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                  <span>{activeUberImage.title}</span>
+                  <span className="text-neutral-400">·</span>
+                  <span className="text-neutral-300 hidden sm:inline">{activeUberImage.category}</span>
+                </div>
+              </div>
+
+              <div className="absolute top-4 right-4 z-10 opacity-80 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-black/75 backdrop-blur-md border border-white/10 text-white text-xs font-mono">
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Enlarge</span>
+                </div>
+              </div>
+
+              {/* Verified repository note watermark */}
+              <div className="absolute bottom-4 right-4 z-10 pointer-events-none">
+                <span className="text-[10px] font-mono text-neutral-400 bg-black/70 backdrop-blur-xs px-2.5 py-1 rounded border border-white/5">
+                  Uber_Analysis.pbix in GitHub Repo
+                </span>
+              </div>
+            </div>
+
+            {/* Thumbnail Selector Strip (5 Categories) */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              {UBER_GALLERY.map((img, idx) => {
+                const isSelected = uberImageIndex === idx;
+                return (
+                  <button
+                    key={img.id}
+                    type="button"
+                    onClick={() => setUberImageIndex(idx)}
+                    className={`relative p-2 rounded-xl text-left border transition-all duration-200 flex flex-col gap-2 ${
+                      isSelected
+                        ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/20 shadow-md ring-1 ring-blue-500/50'
+                        : 'border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0c0c0f] hover:border-neutral-300 dark:hover:border-neutral-700'
+                    }`}
+                  >
+                    <div className="aspect-video w-full rounded-lg overflow-hidden bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-center p-1.5">
+                      <img
+                        src={img.url}
+                        alt={`Thumbnail: ${img.alt}`}
+                        className="w-full h-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="px-1">
+                      <p className={`text-xs font-bold tracking-tight truncate ${
+                        isSelected ? 'text-blue-700 dark:text-blue-300' : 'text-neutral-800 dark:text-neutral-200'
+                      }`}>
+                        {img.title}
+                      </p>
+                      <p className="text-[10px] text-neutral-500 dark:text-neutral-400 font-mono truncate">
+                        {img.category}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+          </div>
+
+          {/* Project Capabilities & Architecture Breakdown */}
+          <div className="p-6 sm:p-8 lg:p-10 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-100/30 dark:bg-white/[0.01]">
+            <h4 className="font-display text-lg sm:text-xl font-bold text-neutral-950 dark:text-white mb-6">
+              Core Capabilities &amp; BI Architecture
+            </h4>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+              {[
+                { title: 'Interactive Dashboard', desc: 'Multi-visual synchronized cross-filtering across ride metrics and vehicle dimensions' },
+                { title: 'Data Visualization', desc: 'Clear visual distribution of volume, route densities, and fleet utilization' },
+                { title: 'Business Intelligence', desc: 'Transforming telemetry logs into executive decision-ready insights' },
+                { title: 'Data Analysis', desc: 'Multi-variable trend detection across trip parameters and ride tiers' },
+                { title: 'KPI Reporting', desc: 'Structured analytical KPIs designed for ongoing operational performance' },
+                { title: 'Vehicle Category Analysis', desc: 'Segmented drilldowns across Auto, Bike, Sedan, Luxury Sedan & Uber XL' },
+                { title: 'Power BI Dashboarding', desc: 'Engineered with custom measures and packaged in native .pbix format' },
+                { title: 'Data Modeling & ETL', desc: 'Star-schema dimensional modeling connecting trip facts with vehicle categories' },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800/80 bg-white dark:bg-[#0e0e12] flex items-start gap-3 shadow-2xs hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors"
+                >
+                  <div className="p-1.5 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h5 className="text-xs sm:text-sm font-bold text-neutral-900 dark:text-white">
+                      {item.title}
+                    </h5>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Insights at a Glance Grid */}
+          <div className="p-6 sm:p-8 lg:p-10 border-t border-neutral-200 dark:border-neutral-800">
+            <div className="mb-6">
+              <span className="font-mono text-xs uppercase tracking-widest text-blue-600 dark:text-blue-400 block mb-1">
+                Verified Findings
+              </span>
+              <h4 className="font-display text-xl sm:text-2xl font-extrabold text-neutral-950 dark:text-white">
+                Insights at a Glance
+              </h4>
+              <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+                Fleet segmentation and analytical patterns documented in the Uber dashboard project:
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {UBER_INSIGHTS.map((insight, idx) => (
+                <motion.div
+                  key={insight.id}
+                  {...cardFadeIn(idx)}
+                  className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-[#0d0d11] hover:border-blue-500/40 dark:hover:border-blue-500/40 transition-all duration-200 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between text-neutral-400 dark:text-neutral-500 mb-3">
+                      <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+                        {insight.stat}
+                      </span>
+                      <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+                    </div>
+                    
+                    <h5 className="font-display text-sm font-bold text-neutral-900 dark:text-white mb-2">
+                      {insight.headline}
+                    </h5>
+
+                    <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
+                      {insight.text}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Uber Bottom CTA Strip */}
+          <div className="p-6 sm:p-8 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-100/60 dark:bg-white/[0.02]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+              <div className="space-y-1">
+                <p className="font-display text-base font-bold text-neutral-900 dark:text-white">
+                  Explore Uber Analytics Dashboard Repository
+                </p>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                  Download the complete <code className="font-mono text-blue-600 dark:text-blue-400">Uber_Analysis.pbix</code> Power BI model, vehicle assets, and documentation on GitHub.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href="https://github.com/iftequaruddin220-hue/Uber-Dashboard"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200 transition-all shadow-sm"
+                >
+                  <span>View on GitHub →</span>
+                  <Github className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ============================================================== */}
+        {/* Section Bottom Global CTA: Inquiries & Consulting             */}
+        {/* ============================================================== */}
+        <div className="p-8 sm:p-10 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0c0c0f] shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div className="space-y-2">
+            <h4 className="font-display text-xl sm:text-2xl font-extrabold text-neutral-950 dark:text-white">
+              Need Business Intelligence &amp; Data-Driven Dashboards?
+            </h4>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+              From Power BI and DAX modeling to full-stack analytics architectures and AI automation, I help founders and teams turn disconnected operational telemetry into clear decisions.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-200 transition-all shadow-sm hover:-translate-y-0.5"
+            >
+              <span>Start a conversation</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+
       </div>
 
-      {/* Fullscreen Lightbox Modal */}
-      {lightboxOpen && (
+      {/* Universal Fullscreen Lightbox Modal */}
+      {lightboxData && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="High resolution dashboard preview"
+          aria-label="High resolution analytics preview"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-200"
-          onClick={() => setLightboxOpen(false)}
+          onClick={() => setLightboxData(null)}
         >
           <div 
             className="relative max-w-6xl w-full max-h-[92vh] flex flex-col items-center"
@@ -503,14 +971,14 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
             {/* Lightbox Controls */}
             <div className="w-full flex items-center justify-between pb-3 text-white">
               <div className="font-mono text-xs text-neutral-300 flex items-center gap-2">
-                <span>{activeImage.title}</span>
+                <span className="font-bold">{lightboxData.title}</span>
                 <span>—</span>
-                <span className="text-neutral-400">{activeImage.subtitle}</span>
+                <span className="text-neutral-400">{lightboxData.subtitle}</span>
               </div>
 
               <button
                 type="button"
-                onClick={() => setLightboxOpen(false)}
+                onClick={() => setLightboxData(null)}
                 className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
                 aria-label="Close fullscreen lightbox"
               >
@@ -518,29 +986,29 @@ export default function DataAnalyticsSection({ onSelectProject }: DataAnalyticsS
               </button>
             </div>
 
-            {/* High-res Image */}
-            <div className="relative w-full rounded-xl overflow-hidden bg-neutral-950 border border-white/10 shadow-2xl">
+            {/* High-res Image Preview */}
+            <div className="relative w-full rounded-2xl overflow-hidden bg-neutral-950 border border-white/10 shadow-2xl flex items-center justify-center p-4 sm:p-8 min-h-[300px]">
               <img
-                src={activeImage.url}
-                alt={activeImage.alt}
-                className="w-full h-auto max-h-[80vh] object-contain mx-auto"
+                src={lightboxData.url}
+                alt={lightboxData.alt}
+                className="w-full h-auto max-h-[75vh] object-contain mx-auto drop-shadow-2xl"
               />
             </div>
 
             {/* Thumbnail Quick Switch in Lightbox */}
-            <div className="flex items-center gap-2 mt-4 overflow-x-auto py-1">
-              {STARBUCKS_GALLERY.map((img, idx) => (
+            <div className="flex items-center gap-2 mt-4 overflow-x-auto py-1 max-w-full">
+              {lightboxData.items.map((item, idx) => (
                 <button
-                  key={`lightbox-${img.id}`}
+                  key={`lightbox-${item.id}`}
                   type="button"
-                  onClick={() => setActiveImageIndex(idx)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all ${
-                    activeImageIndex === idx
-                      ? 'bg-emerald-500 text-white font-bold'
+                  onClick={() => lightboxData.onSelectIndex(idx)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all shrink-0 ${
+                    lightboxData.currentIndex === idx
+                      ? `${lightboxData.accentColor} text-white font-bold`
                       : 'bg-white/10 text-neutral-300 hover:bg-white/20'
                   }`}
                 >
-                  {img.title}
+                  {item.title}
                 </button>
               ))}
             </div>

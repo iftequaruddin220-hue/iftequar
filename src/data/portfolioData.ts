@@ -131,6 +131,136 @@ export const INSIGHTPULSE_PROJECT: Project = {
   },
 };
 
+export const UBER_GALLERY = [
+  {
+    id: 'sedan',
+    title: 'Sedan',
+    category: 'Standard Fleet',
+    subtitle: 'Core urban ride volume & efficiency analysis',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/Uber-Dashboard/main/sedan.png',
+    alt: 'Uber dashboard Sedan vehicle category visualization',
+  },
+  {
+    id: 'auto',
+    title: 'Auto',
+    category: 'Micro-Mobility',
+    subtitle: 'High-frequency short-distance transit metrics',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/Uber-Dashboard/main/auto.png',
+    alt: 'Uber dashboard Auto vehicle category visualization',
+  },
+  {
+    id: 'bike',
+    title: 'Bike',
+    category: 'Rapid Dispatch',
+    subtitle: 'Low-latency single-commuter trip data',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/Uber-Dashboard/main/bike.png',
+    alt: 'Uber dashboard Bike vehicle category visualization',
+  },
+  {
+    id: 'luxury_sedan',
+    title: 'Luxury Sedan',
+    category: 'Premium Fleet',
+    subtitle: 'High-yield executive & airport dispatch trends',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/Uber-Dashboard/main/luxury_sedan.png',
+    alt: 'Uber Analytics Dashboard Luxury Sedan vehicle analysis',
+  },
+  {
+    id: 'uber_xl',
+    title: 'Uber XL',
+    category: 'Group Transit',
+    subtitle: 'Multi-passenger & high-capacity route metrics',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/Uber-Dashboard/main/uber_xl.png',
+    alt: 'Uber dashboard Uber XL vehicle category visualization',
+  },
+];
+
+export const UBER_INSIGHTS = [
+  {
+    id: 'sedan-fleet',
+    headline: 'Standard Fleet Backbone',
+    text: 'Sedan represents the primary benchmark for metropolitan ride volume, baseline pricing, and continuous passenger transit.',
+    stat: 'Volume Core',
+  },
+  {
+    id: 'auto-mobility',
+    headline: 'Micro-Mobility Density',
+    text: 'Auto category addresses high-frequency urban trips with localized congestion bypass and accessible transit fares.',
+    stat: 'High Frequency',
+  },
+  {
+    id: 'bike-dispatch',
+    headline: 'Low-Latency Solo Dispatch',
+    text: 'Bike fleet optimizes rapid single-commuter journeys across dense traffic corridors with minimal dispatch delay.',
+    stat: 'Rapid Transit',
+  },
+  {
+    id: 'luxury-yield',
+    headline: 'Premium Revenue Yield',
+    text: 'Luxury Sedan targets executive travel, airport routes, and business accounts with higher per-trip margins.',
+    stat: 'Premium Tier',
+  },
+  {
+    id: 'uber-xl-capacity',
+    headline: 'Group Passenger Scale',
+    text: 'Uber XL accommodates multi-passenger groups and extended luggage requirements with optimized capacity utilization.',
+    stat: 'High Capacity',
+  },
+  {
+    id: 'dax-segmentation',
+    headline: 'Multi-Modal DAX Modeling',
+    text: 'Dynamic measures across vehicle categories enable synchronized cross-filtering of fleet metrics and dispatch efficiency.',
+    stat: 'Interactive BI',
+  },
+];
+
+export const UBER_PROJECT: Project = {
+  id: 'uber-analytics-dashboard',
+  number: '03',
+  title: 'Uber Analytics Dashboard',
+  subtitle: 'Power BI · Business Intelligence · Data Visualization',
+  tagline: 'An interactive Uber analytics dashboard built to transform ride and vehicle data into clear business intelligence insights through data visualization and dashboard-driven analysis.',
+  category: 'Data Analytics & BI',
+  tags: ['Power BI', 'DAX', 'Power Query', 'Data Modeling', 'Business Intelligence', 'Excel'],
+  description: 'An interactive Uber analytics dashboard built to transform ride and vehicle data into clear business intelligence insights through data visualization and dashboard-driven analysis. Examines multi-modal vehicle categories including Auto, Bike, Sedan, Luxury Sedan, and Uber XL.',
+  featured: false,
+  image: 'https://raw.githubusercontent.com/iftequaruddin220-hue/Uber-Dashboard/main/sedan.png',
+  metrics: [
+    { label: 'Vehicle Fleet Tiers', value: '5 Categories' },
+    { label: 'Platform Engine', value: 'Power BI' },
+    { label: 'Modeling & Logic', value: 'DAX & Power Query' },
+    { label: 'Workbook Format', value: 'Uber_Analysis.pbix' },
+  ],
+  caseStudy: {
+    client: 'Ride-Hailing & Vehicle Analytics Study',
+    timeline: 'Business Intelligence Workflow',
+    role: 'Business Intelligence & Data Analytics Engineer',
+    problem: 'Ride-hailing telemetry encompasses disparate vehicle classes with divergent pricing curves, trip durations, and demand density patterns that are difficult to synthesize in raw tabular logs.',
+    solution: 'Engineered an interactive Power BI dashboard tracking vehicle segmentation, route dynamics, and performance across Auto, Bike, Sedan, Luxury Sedan, and Uber XL classes using clean DAX measures and Power Query ETL.',
+    technologies: [
+      'Microsoft Power BI',
+      'DAX',
+      'Power Query',
+      'Microsoft Excel',
+      'Data Cleaning',
+      'Data Modeling',
+      'Data Visualization',
+      'Dashboard Design',
+      'Business Intelligence',
+    ],
+    keyFeatures: [
+      'Interactive Dashboard with synchronized cross-filtering',
+      'Data Visualization of fleet volume and dispatch trends',
+      'Business Intelligence tracking across vehicle segments',
+      'Data Analysis of transit efficiency and ride parameters',
+      'KPI Reporting designed for operational monitoring',
+      'Vehicle Category Analysis (Auto, Bike, Sedan, Luxury Sedan, Uber XL)',
+      'Power BI Dashboarding with native .pbix delivery',
+    ],
+    outcome: 'Transformed complex ride and fleet parameters into actionable visual intelligence. Project and Uber_Analysis.pbix workbook are fully published on GitHub.',
+    githubUrl: 'https://github.com/iftequaruddin220-hue/Uber-Dashboard',
+  },
+};
+
 export const SERVICES: ServiceItem[] = [
   {
     number: '01',
@@ -202,9 +332,10 @@ export const PROJECTS: Project[] = [
     },
   },
   INSIGHTPULSE_PROJECT,
+  UBER_PROJECT,
   {
     id: 'ecommerce',
-    number: '03',
+    number: '04',
     title: 'Vayro E-Commerce',
     subtitle: 'Minimalist High-Impact Commerce Web Platform',
     tagline: 'Modern, high-performance apparel commerce platform focused on product discovery, intuitive navigation, and frictionless checkout.',
@@ -238,7 +369,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'fashion-app',
-    number: '04',
+    number: '05',
     title: 'Lumi Mobile',
     subtitle: 'Fashion E-Commerce Mobile Application',
     tagline: 'Intuitive mobile shopping application centered on personalized discovery, visual wishlists, and seamless thumb-friendly navigation.',
@@ -272,7 +403,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'ai-automation-agent',
-    number: '05',
+    number: '06',
     title: 'Synapse Flow',
     subtitle: 'Intelligent Autonomous Workflow Engine',
     tagline: 'Custom AI agent orchestration connecting multi-modal LLMs into enterprise CRM and ticketing systems.',
