@@ -1,4 +1,4 @@
-import { ArrowUpRight, Code, Palette, Cpu, Globe, Terminal, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Code, Palette, Cpu, Globe, Terminal, Sparkles, BarChart3 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { sectionFadeIn } from '../lib/animations';
@@ -6,28 +6,34 @@ import { sectionFadeIn } from '../lib/animations';
 export default function AboutSection() {
   const stack = [
     {
-      category: 'Frontend',
+      category: 'Frontend & Architecture',
       icon: Code,
       accent: 'text-blue-500',
       items: ['React 19', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Vite', 'Motion'],
     },
     {
-      category: 'Architecture & Backend',
-      icon: Cpu,
-      accent: 'text-emerald-500',
-      items: ['Node.js', 'Express', 'PostgreSQL', 'Cloud Run', 'Vercel Edge', 'REST & GraphQL'],
+      category: 'Data & Business Intelligence',
+      icon: BarChart3,
+      accent: 'text-teal-500',
+      items: ['Power BI', 'DAX', 'Power Query', 'Data Modeling', 'Data Visualization', 'Excel'],
     },
     {
-      category: 'Design & Craft',
-      icon: Palette,
-      accent: 'text-purple-500',
-      items: ['Figma', 'Design Systems', 'UI/UX Architecture', 'Micro-Interactions', 'Typography'],
+      category: 'Backend & Systems',
+      icon: Cpu,
+      accent: 'text-emerald-500',
+      items: ['Node.js', 'Express', 'PostgreSQL', 'Cloud Run', 'Vercel Edge', 'REST APIs'],
     },
     {
       category: 'AI & Automation',
       icon: Sparkles,
       accent: 'text-amber-500',
       items: ['Gemini API', 'Multi-Agent Systems', 'Structured Tool Calling', 'Autonomous Workflows'],
+    },
+    {
+      category: 'Design & Craft',
+      icon: Palette,
+      accent: 'text-purple-500',
+      items: ['Figma', 'Design Systems', 'UI/UX Architecture', 'Micro-Interactions', 'Typography'],
     },
   ];
 

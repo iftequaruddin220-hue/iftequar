@@ -2,9 +2,9 @@ import { Project, Photo, BlogPost, ServiceItem } from '../types';
 
 export const PERSONAL_INFO = {
   name: 'Iftequaruddin',
-  role: 'Digital Products · Software Engineering · AI',
-  tagline: 'I turn ideas into digital products.',
-  bio: 'I design and build websites, software, and intelligent digital systems that help businesses move from an idea to something real. Based in India, working with ambitious clients globally.',
+  role: 'AI & Data Science · Software Engineering · Business Intelligence',
+  tagline: 'I turn ideas into digital products & data intelligence.',
+  bio: 'An AI & Data Science engineer who can build intelligent systems, analyze data, design interfaces, and translate technical solutions into useful products. Based in India, working with ambitious clients globally.',
   email: 'iftequaruddin220@gmail.com',
   secondaryEmail: 'iftequaruddin220@gmail.com',
   location: 'India · Working Globally (Remote)',
@@ -13,6 +13,121 @@ export const PERSONAL_INFO = {
   socials: {
     github: 'https://github.com/iftequaruddin220-hue',
     linkedin: 'https://www.linkedin.com/in/iftequar-uddin-316b2a376',
+  },
+};
+
+export const STARBUCKS_GALLERY = [
+  {
+    id: 'cover',
+    title: 'Cover Overview',
+    subtitle: 'InsightPulse BI Presentation',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/InsightPulse-BI/main/Images/00_Starbucks_Cover_Image.png',
+    alt: 'InsightPulse BI Starbucks Cover Image',
+  },
+  {
+    id: 'dashboard',
+    title: 'Power BI Dashboard',
+    subtitle: 'Executive Nutritional BI Interface',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/InsightPulse-BI/main/Images/01_Starbucks_Dashboard_PowerBI.png',
+    alt: 'InsightPulse BI Starbucks Power BI Dashboard',
+  },
+  {
+    id: 'charts',
+    title: 'Charts & Analysis',
+    subtitle: 'Comparative Category & Caffeine Metrics',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/InsightPulse-BI/main/Images/02_Starbucks_Charts_Analysis.png',
+    alt: 'InsightPulse BI Starbucks Charts & Statistical Analysis',
+  },
+  {
+    id: 'tools',
+    title: 'Tools & Skills',
+    subtitle: 'Power Query, DAX & Data Modeling Pipeline',
+    url: 'https://raw.githubusercontent.com/iftequaruddin220-hue/InsightPulse-BI/main/Images/03_Starbucks_Tools_Skills.png',
+    alt: 'InsightPulse BI Starbucks Tools and Analytics Architecture',
+  },
+];
+
+export const STARBUCKS_INSIGHTS = [
+  {
+    id: 'major-category',
+    headline: 'Major Category Footprint',
+    text: 'Coffee represents one of the major beverage categories in the dataset.',
+    stat: 'Core Pillar',
+  },
+  {
+    id: 'caffeine-variation',
+    headline: 'Caffeine Variance',
+    text: 'Caffeine levels vary across beverage categories.',
+    stat: 'Wide Spectrum',
+  },
+  {
+    id: 'brewed-coffee',
+    headline: 'Peak Stimulant Concentration',
+    text: 'Brewed coffee ranks among the higher-caffeine beverage categories in the dataset.',
+    stat: 'Top Ranked',
+  },
+  {
+    id: 'calorie-variance',
+    headline: 'Calorie Divergence',
+    text: 'Beverage categories show differences in average calorie content.',
+    stat: '194.30 Cal Avg',
+  },
+  {
+    id: 'interactive-exploration',
+    headline: 'Multi-Parametric Slicing',
+    text: 'Interactive filters allow exploration by protein range and preparation type.',
+    stat: 'Interactive',
+  },
+];
+
+export const INSIGHTPULSE_PROJECT: Project = {
+  id: 'insightpulse-bi',
+  number: '02',
+  title: 'InsightPulse BI',
+  subtitle: 'Starbucks Analytics Dashboard',
+  tagline: 'An interactive Power BI dashboard designed to analyze Starbucks beverage data, transforming nutritional and product information into clear business intelligence insights.',
+  category: 'Data Analytics & BI',
+  tags: ['Power BI', 'DAX', 'Power Query', 'Data Modeling', 'Business Intelligence', 'Excel'],
+  description: 'An interactive Power BI dashboard designed to analyze Starbucks beverage data, transforming nutritional and product information into clear business intelligence insights. The dashboard analyzes calories, sugar, caffeine, protein, beverage categories, beverage preparation, and product-level trends.',
+  featured: true,
+  image: 'https://raw.githubusercontent.com/iftequaruddin220-hue/InsightPulse-BI/main/Images/00_Starbucks_Cover_Image.png',
+  metrics: [
+    { label: 'Total Beverages', value: '33' },
+    { label: 'Average Sugar', value: '33.02 g' },
+    { label: 'Average Calories', value: '194.30' },
+    { label: 'Average Caffeine', value: '81 mg' },
+  ],
+  caseStudy: {
+    client: 'Starbucks Beverage Intelligence Analysis',
+    timeline: 'End-to-End Analytics Workflow',
+    role: 'BI & Data Analytics Engineer',
+    problem: 'Nutritional and product information for beverage portfolios are often buried in dense tabular data, making it challenging to extract clear patterns regarding calories, sugar, caffeine, and preparation methods.',
+    solution: 'Designed and engineered an executive Power BI dashboard with optimized DAX calculations, clean Power Query ingestion pipelines, star-schema data modeling, and multi-visual drilldown reporting.',
+    technologies: [
+      'Microsoft Power BI',
+      'DAX',
+      'Power Query',
+      'Microsoft Excel',
+      'Data Cleaning',
+      'Data Modeling',
+      'Data Visualization',
+      'Dashboard Design',
+      'Business Intelligence',
+    ],
+    keyFeatures: [
+      'Average Calories by Beverage Category comparative aggregation',
+      'Average Caffeine by Category distribution mapping',
+      'Beverage Category Distribution visual segmentation',
+      'Top 5 Highest Caffeine Beverages highlight ranking',
+      'Protein Range Filtering with dynamic nutritional parameters',
+      'Beverage Preparation Filtering (dairy choices, fat content, brew types)',
+      'Data transformation with Power Query',
+      'Analytical calculations using DAX',
+      'Data modeling and dimensional star-schema architecture',
+      'Business intelligence visualization & KPI reporting',
+    ],
+    outcome: 'Transformed 33 complex beverage products into instant business intelligence, enabling instant visual comparison of calories, caffeine, and sugars across preparation styles. Full .pbix workbook and dataset available in the GitHub repository.',
+    githubUrl: 'https://github.com/iftequaruddin220-hue/InsightPulse-BI',
   },
 };
 
@@ -86,9 +201,10 @@ export const PROJECTS: Project[] = [
       githubUrl: 'https://github.com/iftequaruddin/nexadash-analytics',
     },
   },
+  INSIGHTPULSE_PROJECT,
   {
     id: 'ecommerce',
-    number: '02',
+    number: '03',
     title: 'Vayro E-Commerce',
     subtitle: 'Minimalist High-Impact Commerce Web Platform',
     tagline: 'Modern, high-performance apparel commerce platform focused on product discovery, intuitive navigation, and frictionless checkout.',
@@ -122,7 +238,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'fashion-app',
-    number: '03',
+    number: '04',
     title: 'Lumi Mobile',
     subtitle: 'Fashion E-Commerce Mobile Application',
     tagline: 'Intuitive mobile shopping application centered on personalized discovery, visual wishlists, and seamless thumb-friendly navigation.',
@@ -156,7 +272,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'ai-automation-agent',
-    number: '04',
+    number: '05',
     title: 'Synapse Flow',
     subtitle: 'Intelligent Autonomous Workflow Engine',
     tagline: 'Custom AI agent orchestration connecting multi-modal LLMs into enterprise CRM and ticketing systems.',

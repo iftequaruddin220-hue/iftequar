@@ -12,7 +12,7 @@ interface ProjectSectionProps {
 export default function ProjectSection({ onSelectProject }: ProjectSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  const categories = ['All', 'Web App & SaaS', 'E-Commerce', 'Mobile UI/UX', 'AI & Automation'];
+  const categories = ['All', 'Web App & SaaS', 'Data Analytics & BI', 'E-Commerce', 'Mobile UI/UX', 'AI & Automation'];
 
   const filteredProjects = selectedCategory === 'All'
     ? PROJECTS

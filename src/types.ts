@@ -6,7 +6,7 @@ export interface Project {
   title: string;
   subtitle: string;
   tagline: string;
-  category: 'Web App & SaaS' | 'E-Commerce' | 'Mobile UI/UX' | 'AI & Automation';
+  category: 'Web App & SaaS' | 'E-Commerce' | 'Mobile UI/UX' | 'AI & Automation' | 'Data Analytics & BI';
   tags: string[];
   description: string;
   featured?: boolean;

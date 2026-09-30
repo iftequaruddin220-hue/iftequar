@@ -23,6 +23,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
 
   const navItems = [
     { label: 'Work', href: '#work' },
+    { label: 'Data Analytics', href: '#data-analytics' },
     { label: 'Lab', href: '#lab' },
     { label: 'Insights', href: '#blog' },
     { label: 'Services', href: '#services' },
